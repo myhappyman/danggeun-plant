@@ -44,6 +44,7 @@ const ICON_SHAPES = {
   check:   [['polyline', { points: '20 6 9 17 4 12' }]],
   restart: [['polyline', { points: '1 4 1 10 7 10' }], ['path', { d: 'M3.51 15a9 9 0 1 0 2.13-9.36L1 10' }]],
   copy:    [['rect', { x: '9', y: '9', width: '13', height: '13', rx: '2', ry: '2' }], ['path', { d: 'M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1' }]],
+  home:    [['path', { d: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' }], ['polyline', { points: '9 22 9 12 15 12 15 22' }]],
   warn:    [['path', { d: 'M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z' }], ['line', { x1: '12', y1: '9', x2: '12', y2: '13' }], ['line', { x1: '12', y1: '17', x2: '12.01', y2: '17' }]],
 };
 
@@ -90,6 +91,7 @@ function renderStep() {
 
   $('step-screen').classList.remove('hidden');
   $('result-screen').classList.add('hidden');
+  $('btn-home').classList.remove('hidden'); // 작성 중에는 "처음으로" 노출
 
   const step = steps[current];
   $('step-emoji').textContent = step.emoji;
@@ -266,6 +268,7 @@ function prevStep() {
 function renderResult() {
   $('step-screen').classList.add('hidden');
   $('result-screen').classList.remove('hidden');
+  $('btn-home').classList.add('hidden'); // 결과 화면엔 이미 "처음부터" 버튼이 있음
   $('output').textContent = buildListingText(data);
   updateProgress();
 }
@@ -350,6 +353,10 @@ function goToStart() {
   $('start-screen').classList.remove('hidden');
 }
 
+// 처음으로 돌아가기 확인 모달 열기/닫기
+function openConfirm() { $('confirm-modal').classList.remove('hidden'); }
+function closeConfirm() { $('confirm-modal').classList.add('hidden'); }
+
 // ----- 버튼 연결 -----
 $('btn-simple').addEventListener('click', () => startFlow('simple'));
 $('btn-detail').addEventListener('click', () => startFlow('detail'));
@@ -358,6 +365,19 @@ $('btn-skip').addEventListener('click', skipStep);
 $('btn-prev').addEventListener('click', prevStep);
 $('btn-back').addEventListener('click', () => { current = steps.length - 1; renderStep(); });
 $('btn-restart').addEventListener('click', goToStart);
+
+// "처음으로": 작성 내용이 초기화되므로 모달로 한 번 더 확인
+$('btn-home').addEventListener('click', openConfirm);
+$('btn-modal-cancel').addEventListener('click', closeConfirm);
+$('btn-modal-confirm').addEventListener('click', () => { closeConfirm(); goToStart(); });
+// 배경(딤) 클릭 시 닫기 — 모달 내부 클릭은 무시
+$('confirm-modal').addEventListener('click', (e) => {
+  if (e.target === $('confirm-modal')) closeConfirm();
+});
+// Esc 키로 닫기
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !$('confirm-modal').classList.contains('hidden')) closeConfirm();
+});
 $('btn-copy').addEventListener('click', async () => {
   const text = $('output').textContent;
   try {
@@ -378,6 +398,7 @@ setButton($('btn-skip'), 'skip', '건너뛰기', true);
 setButton($('btn-back'), 'prev', '이전');
 setButton($('btn-restart'), 'restart', '처음부터');
 setButton($('btn-copy'), 'copy', '복사하기');
+$('btn-home').appendChild(icon('home', 18)); // 아이콘만 (라벨은 aria-label)
 
 // 키보드가 올라와도 진행바가 보이도록, 앱 높이를 "실제로 보이는 영역"에 맞춤
 const appEl = document.querySelector('.app');
