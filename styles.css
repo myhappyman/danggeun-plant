@@ -1,0 +1,261 @@
+:root {
+  --green: #3d8b5f;
+  --green-dark: #2f6e4b;
+  --bg: #f4f7f4;
+  --card: #ffffff;
+  --border: #d9e2d9;
+  --text: #2b332b;
+  --muted: #8a948a;
+  --disabled: #cdd6cd;
+  --warn: #d64545;
+  --warn-bg: #fff6f6;
+  --warn-border: #f0c4c4;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;          /* 페이지 스크롤 차단 — 스크롤 주체는 .step */
+}
+.app {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;              /* JS가 visualViewport 높이로 덮어씀 */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 16px 18px 24px;
+}
+
+/* 진행 표시 */
+.progress {
+  flex: 0 0 auto;       /* 스크롤 영역 밖 — 항상 상단에 표시됨 */
+  background: var(--bg);
+  padding: 10px 0 6px;
+}
+.progress-bar {
+  height: 6px;
+  background: #e3eae3;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--green);
+  border-radius: 999px;
+  transition: width .25s ease;
+}
+.progress-text {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 6px;
+  text-align: right;
+}
+
+/* 시작 화면 */
+.start {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 0 24px;
+}
+.start-title { text-align: center; font-size: 1.5rem; margin: 0; }
+.start-sub { text-align: center; color: var(--muted); margin: 8px 0 24px; }
+.start-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 22px 22px;
+  border: 2px solid var(--green);
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  white-space: normal;
+  transition: transform .12s, box-shadow .12s;
+}
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(61,139,95,.15); }
+.start-btn .s-title { font-size: 1.25rem; font-weight: 700; color: var(--green-dark); }
+.start-btn .s-desc { font-size: 0.9rem; font-weight: 400; color: var(--muted); }
+.start-btn.primary { background: var(--green); border-color: var(--green); }
+.start-btn.primary .s-title { color: #fff; }
+.start-btn.primary .s-desc { color: #e7f2eb; }
+
+/* 단계 카드 */
+.step {
+  flex: 1 1 auto;
+  min-height: 0;               /* flex 자식이 줄어들며 내부 스크롤되도록 */
+  overflow-y: auto;            /* 입력 영역만 스크롤 — 진행바는 고정 유지 */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 위쪽 정렬 */
+  padding: 16px 0 24px;
+}
+.step-emoji { font-size: 2.6rem; }
+.step-label {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin: 10px 0 4px;
+}
+.step-hint {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+}
+.field {
+  width: 100%;
+  padding: 14px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-size: 16px;          /* iOS 자동 확대 방지 */
+  font-family: inherit;
+  background: #fbfdfb;
+}
+.field:focus { outline: none; border-color: var(--green); }
+textarea.field { resize: none; min-height: 110px; }
+
+/* 복수 선택 옵션 (거래 방식 등) */
+.choice-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 14px;
+  margin-bottom: 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: #fbfdfb;
+  font-size: 1.02rem;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.choice-row input {
+  width: 20px; height: 20px;
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: var(--green);
+}
+.choice-row:has(input:checked) {
+  border-color: var(--green);
+  background: #eef6f0;
+  font-weight: 600;
+}
+
+/* 주의사항 체크박스 */
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: #fbfdfb;
+  cursor: pointer;
+}
+.checkbox-row input {
+  width: 20px; height: 20px;
+  margin: 2px 0 0;
+  flex: 0 0 auto;
+  accent-color: var(--green);
+}
+.checkbox-row .cb-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.checkbox-row .cb-label svg { flex: 0 0 auto; }
+.checkbox-row .cb-desc { color: var(--muted); font-size: 0.86rem; margin-top: 3px; }
+
+/* 경고(주의) 변형 */
+.checkbox-row.warn { border-color: var(--warn-border); background: var(--warn-bg); }
+.checkbox-row.warn input { accent-color: var(--warn); }
+.checkbox-row.warn .cb-label { color: var(--warn); }
+
+/* 체크 시 나타나는 추가 입력칸 */
+.reveal-wrap { margin-top: 10px; }
+
+/* 버튼 영역 */
+.buttons {
+  display: flex;
+  gap: 10px;
+  padding-top: 8px;
+}
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 15px 8px;
+  white-space: nowrap;
+}
+button svg { flex: 0 0 auto; }
+.btn-prev { background: #eef2ee; color: var(--text); flex: 1; }
+.btn-skip {
+  background: #fff;
+  color: var(--green-dark);
+  border: 1.5px solid var(--green);
+  flex: 1;
+}
+.btn-skip:hover { background: #eef6f0; }
+.btn-confirm { background: var(--green); color: #fff; flex: 1; }
+.btn-confirm:disabled { background: var(--disabled); color: #fff; cursor: not-allowed; }
+button:disabled { cursor: not-allowed; }
+.btn-prev:disabled { opacity: .4; }
+
+/* 결과 화면 */
+.result { flex: 1; display: flex; flex-direction: column; padding-top: 8px; }
+.result h2 { font-size: 1.3rem; margin: 4px 0 14px; }
+pre#output {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  font-family: inherit;
+  font-size: 0.98rem;
+  margin: 0 0 14px;
+}
+.result .buttons { flex-wrap: wrap; }
+.btn-restart { background: #eef2ee; color: var(--text); flex: 0 0 auto; min-width: 90px; }
+.btn-copy { background: var(--green); color: #fff; flex: 1; }
+.btn-copy:hover, .btn-confirm:not(:disabled):hover { background: var(--green-dark); }
+
+.hidden { display: none !important; }
+
+/* 복사 완료 토스트 */
+.toast {
+  position: fixed;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--green-dark);
+  color: #fff;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s, transform .2s;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }

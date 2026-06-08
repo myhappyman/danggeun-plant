@@ -1,0 +1,12 @@
+# 문서 (저장소에 포함하지 않음)
+/docs/
+
+# OS 생성 파일
+.DS_Store
+
+# 에디터/IDE
+.vscode/
+.idea/
+
+# 로그
+*.log

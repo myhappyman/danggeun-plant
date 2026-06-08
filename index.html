@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, interactive-widget=resizes-content" />
+  <title>식물 거래글 만들기 🌿</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <div class="progress hidden" id="progress">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-text" id="progress-text"></div>
+    </div>
+
+    <!-- 시작 화면: 작성 모드 선택 -->
+    <section class="start" id="start-screen">
+      <h2 class="start-title">🌿 식물 거래글 만들기</h2>
+      <p class="start-sub">어떻게 작성할까요?</p>
+      <button type="button" class="start-btn primary" id="btn-simple">
+        <span class="s-title">간단 작성</span>
+        <span class="s-desc">꼭 필요한 7가지만 빠르게</span>
+      </button>
+      <button type="button" class="start-btn" id="btn-detail">
+        <span class="s-title">꼼꼼 작성</span>
+        <span class="s-desc">12가지 항목으로 자세하게</span>
+      </button>
+    </section>
+
+    <!-- 단계(위저드) 화면 -->
+    <section class="step hidden" id="step-screen">
+      <div class="step-emoji" id="step-emoji"></div>
+      <div class="step-label" id="step-label"></div>
+      <div class="step-hint" id="step-hint"></div>
+      <div id="field-container"></div>
+      <div id="extra-container"></div>
+      <div class="buttons">
+        <button type="button" class="btn-prev" id="btn-prev">이전</button>
+        <button type="button" class="btn-skip" id="btn-skip">건너뛰기</button>
+        <button type="button" class="btn-confirm" id="btn-confirm" disabled>다음</button>
+      </div>
+    </section>
+
+    <!-- 결과 화면 -->
+    <section class="result hidden" id="result-screen">
+      <h2>🌿 완성된 거래글</h2>
+      <pre id="output"></pre>
+      <div class="buttons">
+        <button type="button" class="btn-prev" id="btn-back">이전</button>
+        <button type="button" class="btn-restart" id="btn-restart">처음부터</button>
+        <button type="button" class="btn-copy" id="btn-copy">복사하기</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast">복사되었습니다 ✅</div>
+
+</body>
+</html>
