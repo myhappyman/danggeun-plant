@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="식물 새싹">
+  <rect width="32" height="32" rx="8" fill="#3d8b5f"/>
+  <!-- 줄기 -->
+  <path d="M16 25V14" stroke="#eaf4ee" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- 왼쪽 잎 -->
+  <path d="M16 17C12.8 17 9.5 15 8 11.5c3.6-.6 6.9.8 8 5.5Z" fill="#eaf4ee"/>
+  <!-- 오른쪽 잎 -->
+  <path d="M16 15C19 14.4 22 12 23 8.5c-3.5-.3-6.6 1.4-7 6.5Z" fill="#ffffff"/>
+  <!-- 흙 -->
+  <path d="M9 25h14" stroke="#2f6e4b" stroke-width="2.6" stroke-linecap="round"/>
+</svg>
