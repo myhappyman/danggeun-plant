@@ -52,10 +52,28 @@ body {
   border-radius: 999px;
   transition: width .25s ease;
 }
+.progress-top {
+  display: flex;
+  align-items: center;
+}
+.progress-top .progress-bar { flex: 1; }
+.btn-home {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  margin-right: 16px;       /* 집 ↔ 진행바 */
+  padding: 0;
+  border-radius: 10px;
+  background: #eef2ee;
+  color: var(--green-dark);
+}
+.btn-home:hover { background: #e0e9e0; }
 .progress-text {
+  flex: 0 0 auto;
+  min-width: 44px;            /* 1/7 → 12/12 자리수 변화에도 진행바가 출렁이지 않도록 */
+  margin-left: 8px;          /* 진행바 ↔ 숫자 */
   font-size: 0.8rem;
   color: var(--muted);
-  margin-top: 6px;
   text-align: right;
 }
 
@@ -244,6 +262,33 @@ pre#output {
 .btn-copy:hover, .btn-confirm:not(:disabled):hover { background: var(--green-dark); }
 
 .hidden { display: none !important; }
+
+/* 확인 모달 */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 30, 22, .45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 10;
+}
+.modal {
+  width: 100%;
+  max-width: 340px;
+  background: var(--card);
+  border-radius: 16px;
+  padding: 22px 20px 18px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.2);
+}
+.modal-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+.modal-desc { color: var(--muted); font-size: 0.92rem; margin-bottom: 20px; }
+.modal-buttons { display: flex; gap: 10px; }
+.btn-modal-cancel { background: #eef2ee; color: var(--text); flex: 1; }
+.btn-modal-cancel:hover { background: #e0e9e0; }
+.btn-modal-confirm { background: var(--warn); color: #fff; flex: 1; }
+.btn-modal-confirm:hover { background: #b93a3a; }
 
 /* 복사 완료 토스트 */
 .toast {
